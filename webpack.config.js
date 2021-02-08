@@ -2,18 +2,19 @@ const path = require("path");
 
 module.exports = {
   // 最初に読み込むファイルを指定
-  entry: "./src/index.ts",
+  entry: "./src/index.tsx",
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
+        // x? は あってもなくてもいいという意味 正規表現
         use: "ts-loader",
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".ts"],
+    extensions: [".js","ts","tsx"],
   },
   // 出力の設定
   output: {
