@@ -14,7 +14,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".js","ts","tsx"],
+    extensions: [".js", "ts", "tsx"],
   },
   // 出力の設定
   output: {
@@ -23,5 +23,11 @@ module.exports = {
     // 出力するファイル名
     filename: "index.js",
     publicPath: "dist/",
+  },
+  devServer: {
+    hot: true,
+    // ファイルを変更すると自動的にブラウザに反映させるフラグa
+    open: true,
+    // 起動時にブラウザで開くフラグ,
   },
 };
