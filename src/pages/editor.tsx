@@ -1,6 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
 
+const { useState } = React;
+
 const Header = styled.header`
   font-size: 1.5rem;
   height: 2rem;
@@ -44,11 +46,22 @@ const Preview = styled.div`
 `;
 
 export const Editor: React.FC = () => {
+  const [text, setText] = useState<string>("");
+  // const [値, 値をセットする関数] = useState<扱う状態の型>(初期値)
   return (
     <>
       <Header>Markdown Editor</Header>
       <Wrapper>
-        <TextArea value="テキスト入力エリア" />
+        {/* <TextArea value="テキスト入力エリア" /> */}
+        <TextArea
+          onChange={(event) => {
+            setText(event.target.value);
+            //  event.target.value にテキストの内容が格納されている
+            // console.log(text);
+            console.log(event.target.value);
+          }}
+          value={text}
+        />
         <Preview>プレビューエリア</Preview>
       </Wrapper>
     </>
