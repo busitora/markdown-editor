@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
-
-const { useState } = React;
+// const { useState } = React;
+import { useStateWithStorage } from "../hooks/use_state_with_storage";
 
 const Header = styled.header`
   font-size: 1.5rem;
@@ -45,8 +45,13 @@ const Preview = styled.div`
   width: 50vw;
 `;
 
+const StorageKey = "pages/editor:text";
+
 export const Editor: React.FC = () => {
-  const [text, setText] = useState<string>("");
+  //   const [text, setText] = useState<string>(
+  //     localStorage.getItem(StorageKey) || "何も保存されていないよ"
+  //   );
+  const [text, setText] = useStateWithStorage("", StorageKey);
   // const [値, 値をセットする関数] = useState<扱う状態の型>(初期値)
   return (
     <>
@@ -54,13 +59,15 @@ export const Editor: React.FC = () => {
       <Wrapper>
         {/* <TextArea value="テキスト入力エリア" /> */}
         <TextArea
-          onChange={(event) => {
-            setText(event.target.value);
-            //  event.target.value にテキストの内容が格納されている
-            // console.log(text);
-            console.log(event.target.value);
-          }}
-          value={text}
+          //   onChange={(event) => {
+          //     const changedText = event.target.value;
+          //     localStorage.setItem(StorageKey, changedText);
+          //     setText(changedText);
+          //     //  event.target.value にテキストの内容が格納されている
+          //     console.log(localStorage.getItem(StorageKey));
+          //   }}
+          //   value={text}
+          onChange={(event) => setText(event.target.value)}
         />
         <Preview>プレビューエリア</Preview>
       </Wrapper>
