@@ -44,7 +44,13 @@ const MemoText = styled.div`
   white-space: nowrap;
 `;
 
-export const History: React.FC = () => {
+// export const History: React.FC = () => {
+interface Props {
+  setText: (text: string) => void;
+}
+export const History: React.FC<Props> = (props) => {
+  const { setText } = props;
+  const history = useHistory();
   const [memos, setMemos] = useState<MemoRecord[]>([]);
   console.log(memos);
 
@@ -62,7 +68,13 @@ export const History: React.FC = () => {
       </HeaderArea>
       <Wrapper>
         {memos.map((memo) => (
-          <Memo key={memo.datetime}>
+          <Memo
+            key={memo.datetime}
+            onClick={() => {
+              setText(memo.text);
+              history.push("/editor");
+            }}
+          >
             <MemoTitle>{memo.title}</MemoTitle>
             <MemoText>{memo.text}</MemoText>
           </Memo>
