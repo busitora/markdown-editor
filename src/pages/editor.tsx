@@ -48,10 +48,16 @@ const Preview = styled.div`
   width: 50vw;
 `;
 
-const StorageKey = "pages/editor:text";
+// const StorageKey = "pages/editor:text";
+interface Props {
+  text: string;
+  setText: (text: string) => void;
+}
 
-export const Editor: React.FC = () => {
-  const [text, setText] = useStateWithStorage("", StorageKey);
+// export const Editor: React.FC = () => {
+//   const [text, setText] = useStateWithStorage("", StorageKey);
+export const Editor: React.FC<Props> = (props) => {
+  const { text, setText } = props;
   // const [値, 値をセットする関数] = useState<扱う状態の型>(初期値)
   const [showModal, setShowModal] = useState(false);
 
