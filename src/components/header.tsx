@@ -33,7 +33,7 @@ interface Props {
 export const Header: React.FC<Props> = (props) => (
   <HeaderWrapper>
     <HeaderTitle>{props.title}</HeaderTitle>
-        <HeaderControl>{props.children}</HeaderControl>
-        {console.log(props.children)}
+    <HeaderControl>{props.children}</HeaderControl>
+    {/* {console.log(props.children)} */}
   </HeaderWrapper>
 );
