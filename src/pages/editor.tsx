@@ -1,18 +1,31 @@
 import * as React from "react";
 import styled from "styled-components";
- import * as ReactMarkdown from "react-markdown";
-// const { useState } = React;
+import * as ReactMarkdown from "react-markdown";
 import { useStateWithStorage } from "../hooks/use_state_with_storage";
+import { putMemo } from "../indexeddb/memos";
+import { Button } from "../components/button";
+import { SaveModal } from "../components/save_modal";
+
+const { useState } = React;
 
 const Header = styled.header`
+  align-content: center;
+  display: flex;
   font-size: 1.5rem;
   height: 2rem;
+  justify-content: space-between;
   left: 0;
   line-height: 2rem;
   padding: 0.5rem 1rem;
   position: fixed;
   right: 0;
   top: 0;
+`;
+
+const HeaderControl = styled.div`
+  height: 2rem;
+  display: flex;
+  align-content: center;
 `;
 
 const Wrapper = styled.div`
@@ -49,31 +62,34 @@ const Preview = styled.div`
 const StorageKey = "pages/editor:text";
 
 export const Editor: React.FC = () => {
-  //   const [text, setText] = useState<string>(
-  //     localStorage.getItem(StorageKey) || "何も保存されていないよ"
-  //   );
   const [text, setText] = useStateWithStorage("", StorageKey);
   // const [値, 値をセットする関数] = useState<扱う状態の型>(初期値)
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
-      <Header>Markdown Editor</Header>
+      <Header>
+        Markdown Editor
+        <HeaderControl>
+          <Button onClick={() => setShowModal(true)}>保存する</Button>
+        </HeaderControl>
+      </Header>
       <Wrapper>
-        {/* <TextArea value="テキスト入力エリア" /> */}
-        <TextArea
-          //   onChange={(event) => {
-          //     const changedText = event.target.value;
-          //     localStorage.setItem(StorageKey, changedText);
-          //     setText(changedText);
-          //     //  event.target.value にテキストの内容が格納されている
-          //     console.log(localStorage.getItem(StorageKey));
-          //   }}
-          //   value={text}
-          onChange={(event) => setText(event.target.value)}
-        />
+        <TextArea onChange={(event) => setText(event.target.value)} />
         <Preview>
           <ReactMarkdown source={text} />
         </Preview>
       </Wrapper>
+      {showModal && (
+        <SaveModal
+          onSave={(title: string): void => {
+            putMemo(title, text);
+            setShowModal(false);
+          }}
+          onCancel={() => setShowModal(false)}
+        />
+        // モーダルコンポーネントへ
+      )}
     </>
   );
 };
